@@ -6,8 +6,7 @@ function App() {
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charAllowed, setCharAllowed] = useState(false);
   const [Password, setPassword] = useState('');
-
-  // useRef hook
+  const [text, setText] = useState('Copy');
 
   const passwordRef = useRef(null);
 
@@ -27,6 +26,11 @@ function App() {
 
     setPassword(pass);
   }, [length, numberAllowed, charAllowed, setPassword]);
+
+  // copy button to copied
+  const handleClick = () => {
+    setText('Copied');
+  };
 
   const copyPasswordToClipboard = useCallback(() => {
     passwordRef.current?.select();
@@ -54,10 +58,12 @@ function App() {
             ref={passwordRef}
           />
           <button
-            onClick={copyPasswordToClipboard}
+            onClick={() => {
+              copyPasswordToClipboard(), handleClick();
+            }}
             className="outline-none bg-blue-600 text-white px-3 py-0.5 shrink-0"
           >
-            Copy
+            {text}
           </button>
         </div>
         <div className="flex text-sm gap-x-2">
